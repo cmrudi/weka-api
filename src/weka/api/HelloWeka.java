@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Random;
 
+import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
@@ -95,11 +96,17 @@ public class HelloWeka {
 		
 	}
 	
-	public static void inputNewInstance(String arff_filename, String input) throws Exception {
-		String filename = arff_filename;
-		FileWriter fwriter = new FileWriter(filename,true); //true will append the new instance
-		fwriter.write(input);//appends the string to the file
-		fwriter.close();
+	public static void inputNewInstance(Instances dataset, double attr1, double attr2, double attr3, double attr4, double attr5) throws Exception {
+		double[] instanceValue = new double[dataset.numAttributes()];
+		instanceValue[0] = attr1;
+        instanceValue[1] = attr2;
+        instanceValue[2] = attr3;
+        instanceValue[3] = attr4;
+        instanceValue[4] = attr5;
+        dataset.add(new DenseInstance(1,instanceValue));
+        System.out.println(dataset);
+        
+		
 	}
 
 	
@@ -107,7 +114,9 @@ public class HelloWeka {
 		//Read Data Set and assign to dataset
 		DataSource source = new DataSource("/home/cmrudi/weka-3-8-0/data/iris.arff");
 		Instances dataset = source.getDataSet();
-		System.out.println(dataset.toSummaryString());
+		
+		System.out.println(dataset);
+		
 		
 		//Use NumericToNominal and assign to nomData
 		String[] opts = new String[]{"-R","1,2"};
@@ -132,5 +141,7 @@ public class HelloWeka {
 		//Load Model
 		NaiveBayes newNb = loadNaiveBayesModel("my_nb_model.model");
 		
+		//inputInstance
+		inputNewInstance(dataset,5.8,2.9,5,1.7,2);
 	}
 }
