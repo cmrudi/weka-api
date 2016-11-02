@@ -7,5 +7,6 @@
 @attribute class {Iris-setosa,Iris-versicolor,Iris-virginica}
 
 @data
+0,0,0,0,Iris-setosa
 1,1,1,1,Iris-versicolor
 2,2,2,2,Iris-virginica

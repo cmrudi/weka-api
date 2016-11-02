@@ -99,19 +99,20 @@ public class HelloWeka {
 	}
 	
 	public static void inputNewInstance(Instances dataset) throws Exception {
+		int numline;
 		Scanner str = new Scanner(System.in);
 		String input;
 		String[] parseInput = new String[dataset.numAttributes()];;
 		dataset.delete();
 		double[][] instanceValue = new double[100][dataset.numAttributes()];
 		System.out.println("=This is input instruction to create instances at iris.arff");
-		System.out.println("=You need to input minimum 5 instance");
 		System.out.println("=Input format: <double>,<double>,<double>,<double>,<int>");
 		System.out.println("=<int> should be in range 0 to 2 ");
 		System.out.println("=Input example: 5.8,2.9,5,1.7,2");
-		System.out.println("=Let's start with 5 input");
-		
-		for (int i = 0; i < 2; i++) {
+		System.out.println("=Please input how many line do you want (max 100) to create and then type your instance:");
+		numline = Integer.parseInt(str.next());
+		str.nextLine();
+		for (int i = 0; i < numline; i++) {
 			input = str.nextLine();
 			parseInput = input.split(",");
 			for (int j =0; j < 5; j++) {
