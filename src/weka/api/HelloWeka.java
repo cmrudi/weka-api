@@ -1,8 +1,10 @@
 package weka.api;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Random;
+import java.util.Scanner;
 
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -96,15 +98,33 @@ public class HelloWeka {
 		
 	}
 	
-	public static void inputNewInstance(Instances dataset, double attr1, double attr2, double attr3, double attr4, double attr5) throws Exception {
-		double[] instanceValue = new double[dataset.numAttributes()];
-		instanceValue[0] = attr1;
-        instanceValue[1] = attr2;
-        instanceValue[2] = attr3;
-        instanceValue[3] = attr4;
-        instanceValue[4] = attr5;
-        dataset.add(new DenseInstance(1,instanceValue));
-        System.out.println(dataset);
+	public static void inputNewInstance(Instances dataset) throws Exception {
+		Scanner str = new Scanner(System.in);
+		String input;
+		String[] parseInput = new String[dataset.numAttributes()];;
+		dataset.delete();
+		double[][] instanceValue = new double[100][dataset.numAttributes()];
+		System.out.println("=This is input instruction to create instances at iris.arff");
+		System.out.println("=You need to input minimum 5 instance");
+		System.out.println("=Input format: <double>,<double>,<double>,<double>,<int>");
+		System.out.println("=<int> should be in range 0 to 2 ");
+		System.out.println("=Input example: 5.8,2.9,5,1.7,2");
+		System.out.println("=Let's start with 5 input");
+		
+		for (int i = 0; i < 2; i++) {
+			input = str.nextLine();
+			parseInput = input.split(",");
+			for (int j =0; j < 5; j++) {
+				instanceValue[i][j] = Double.parseDouble(parseInput[j]);
+				//System.out.println(instanceValue[i]);
+			}
+			dataset.add(new DenseInstance(1,instanceValue[i]));
+			System.out.println(dataset);
+		}
+		BufferedWriter writer = new BufferedWriter(new FileWriter("iris_test.arff"));
+		writer.write(dataset.toString());
+		writer.flush();
+		writer.close();
         
 		
 	}
@@ -142,6 +162,6 @@ public class HelloWeka {
 		NaiveBayes newNb = loadNaiveBayesModel("my_nb_model.model");
 		
 		//inputInstance
-		inputNewInstance(dataset,5.8,2.9,5,1.7,2);
+		inputNewInstance(dataset);
 	}
 }
